@@ -1,5 +1,7 @@
 {
   "dependencies": {
+    "@editorjs/code": "^2.9.0",
+    "@editorjs/delimiter": "^1.4.0",
     "@editorjs/editorjs": "^2.29.1",
     "@editorjs/embed": "^2.7.4",
     "@editorjs/header": "^2.8.1",
