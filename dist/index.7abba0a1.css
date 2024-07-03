@@ -1,0 +1,31 @@
+body {
+  background: #fdfdfd;
+  height: 100%;
+  padding: 1em;
+  font-family: Monteserrat;
+}
+
+#editorjs {
+  background: #fff;
+  width: 80%;
+  padding: 1em;
+}
+
+button {
+  color: #fff;
+  text-transform: uppercase;
+  background: #00803e;
+  border: none;
+  border-radius: 30px;
+  margin-top: 2em;
+  padding: 1em;
+}
+
+#Navbar {
+  background-color: #fff;
+  justify-content: space-between;
+  align-items: start;
+  padding: 1px;
+  display: flex;
+}
+/*# sourceMappingURL=index.7abba0a1.css.map */

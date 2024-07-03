@@ -1,0 +1,30 @@
+body {
+  background: rgb(253, 253, 253);
+  height: 100%;
+  padding: 1em;
+  font-family: "Monteserrat";
+}
+
+#editorjs {
+  background: white;
+  width: 80%;
+  padding: 1em;
+}
+
+button {
+  background: rgb(0, 128, 62);
+  color: white;
+  border: none;
+  border-radius: 30px;
+  text-transform: uppercase;
+  padding: 1em;
+  margin-top: 2em;
+}
+
+#Navbar {
+  display: flex;
+  justify-content: space-between; /* Aligns items to opposite sides */
+  align-items: start; /* Centers items vertically */
+  padding: 1px;
+  background-color: rgb(255, 255, 255);
+}
