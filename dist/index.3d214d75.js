@@ -10501,6 +10501,132 @@ const r = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"MjOOO":[function(require,module,exports) {
+/* class ImageTool {
+  constructor({ data, api, config }) {
+    this.api = api;
+    this.config = config;
+    this.data = data || {};
+    this.wrapper = null;
+
+    this.triggerFileInput();
+  }
+
+  static get toolbox() {
+    return {
+      title: "Image",
+      icon: '<svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-11-1H5l3.5-4.5 2.5 3.01L17.5 9l3.5 5h-11zm-1-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>',
+    };
+  }
+
+  render() {
+    this.wrapper = document.createElement("div");
+
+    if (this.data.url) {
+      const img = document.createElement("img");
+      img.src = this.data.url;
+      img.style.maxWidth = "100%"; // Ensure image fits container width
+      img.style.height = "auto"; // Maintain aspect ratio
+      this.wrapper.appendChild(img);
+    }
+
+    return this.wrapper;
+  }
+
+  triggerFileInput() {
+    this.input = document.createElement("input");
+    this.input.type = "file";
+    this.input.accept = "image/*";
+    this.input.style.display = "none";
+    this.input.addEventListener("change", (event) => this.uploadImage(event));
+
+    document.body.appendChild(this.input);
+    this.input.click();
+  }
+
+  uploadImage(event) {
+    const file = event.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.data.url = e.target.result;
+        this.updateView();
+        this.focusCaptionInput(); // Focus on caption input after image is uploaded
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  updateView() {
+    if (!this.wrapper) {
+      this.wrapper = document.createElement("div");
+    }
+    this.wrapper.innerHTML = "";
+
+    // Create image element
+    if (this.data.url) {
+      const img = document.createElement("img");
+      img.src = this.data.url;
+      img.style.maxWidth = "100%"; // Ensure image fits container width
+      img.style.height = "auto"; // Maintain aspect ratio
+      this.wrapper.appendChild(img);
+
+      // Create caption wrapper
+      const captionWrapper = document.createElement("div");
+      captionWrapper.classList.add("caption-wrapper");
+
+      // Create caption input element
+      const captionInput = document.createElement("input");
+      captionInput.type = "text";
+      captionInput.placeholder = "Enter caption";
+      captionInput.value = this.data.caption || "";
+      captionInput.addEventListener("input", () => {
+        this.data.caption = captionInput.value;
+      });
+      captionInput.addEventListener("keydown", (event) => {
+        if (event.key === "Backspace" && captionInput.value.trim() === "") {
+          this.api.blocks.delete();
+        }
+      });
+
+      // Append caption input to caption wrapper
+      captionWrapper.appendChild(captionInput);
+
+      // Append caption wrapper to main wrapper
+      this.wrapper.appendChild(captionWrapper);
+
+      // Focus on caption input
+      captionInput.focus();
+    }
+  }
+
+  save(blockContent) {
+    return {
+      url: this.data.url,
+      caption: this.data.caption,
+    };
+  }
+
+  validate(savedData) {
+    return !!savedData.url;
+  }
+
+  static get pasteConfig() {
+    return {
+      tags: ["img"],
+    };
+  }
+
+  static get sanitize() {
+    return {
+      url: {},
+      caption: {},
+    };
+  }
+}
+
+export default ImageTool;
+
+ */ // adds caption after imag
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 class ImageTool {
@@ -10522,6 +10648,8 @@ class ImageTool {
         if (this.data.url) {
             const img = document.createElement("img");
             img.src = this.data.url;
+            img.style.maxWidth = "100%"; // Ensure image fits container width
+            img.style.height = "auto"; // Maintain aspect ratio
             this.wrapper.appendChild(img);
         }
         return this.wrapper;
@@ -10533,7 +10661,7 @@ class ImageTool {
         this.input.style.display = "none";
         this.input.addEventListener("change", (event)=>this.uploadImage(event));
         document.body.appendChild(this.input);
-        this.input.click(); // Trigger the file input
+        this.input.click();
     }
     uploadImage(event) {
         const file = event.target.files[0];
@@ -10542,19 +10670,50 @@ class ImageTool {
             reader.onload = (e)=>{
                 this.data.url = e.target.result;
                 this.updateView();
+                this.focusCaptionInput(); // Focus on caption input after image is uploaded
             };
             reader.readAsDataURL(file);
         }
     }
     updateView() {
-        this.wrapper.innerHTML = ""; // Clear the wrapper
-        const img = document.createElement("img");
-        img.src = this.data.url;
-        this.wrapper.appendChild(img);
+        if (!this.wrapper) this.wrapper = document.createElement("div");
+        this.wrapper.innerHTML = "";
+        // Create image element
+        if (this.data.url) {
+            const img = document.createElement("img");
+            img.src = this.data.url;
+            img.style.maxWidth = "100%"; // Ensure image fits container width
+            img.style.height = "auto"; // Maintain aspect ratio
+            this.wrapper.appendChild(img);
+            // Create caption wrapper
+            const captionWrapper = document.createElement("div");
+            captionWrapper.classList.add("caption-wrapper");
+            // Create caption input element
+            const captionInput = document.createElement("input");
+            captionInput.type = "text";
+            captionInput.placeholder = "Enter caption";
+            captionInput.value = this.data.caption || "";
+            captionInput.addEventListener("input", ()=>{
+                this.data.caption = captionInput.value;
+            });
+            captionInput.addEventListener("keydown", (event)=>{
+                if (event.key === "Backspace" && captionInput.value.trim() === "") {
+                    event.preventDefault(); // Prevent default backspace behavior
+                    this.api.blocks.delete();
+                }
+            });
+            // Append caption input to caption wrapper
+            captionWrapper.appendChild(captionInput);
+            // Append caption wrapper to main wrapper
+            this.wrapper.appendChild(captionWrapper);
+            // Focus on caption input
+            captionInput.focus();
+        }
     }
     save(blockContent) {
         return {
-            url: this.data.url
+            url: this.data.url,
+            caption: this.data.caption
         };
     }
     validate(savedData) {
@@ -10569,7 +10728,8 @@ class ImageTool {
     }
     static get sanitize() {
         return {
-            url: {}
+            url: {},
+            caption: {}
         };
     }
 }
@@ -10887,108 +11047,6 @@ class d {
 }
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7PB4b":[function(require,module,exports) {
-/* 
-
-import { Tool } from "@editorjs/editorjs";
-
-export default class CodeTool {
-  static get isReadOnlySupported() {
-    return true;
-  }
-
-  constructor({ data, config, api }) {
-    this.data = data;
-    this.api = api;
-    this.config = config || {};
-    this.placeholder = this.config.placeholder || "Enter your code here";
-    this.languages = [
-      { value: "javascript", label: "JavaScript" },
-      { value: "cpp", label: "C++" },
-      { value: "java", label: "Java" },
-    ];
-
-    this.codeArea = null;
-    this.languageDropdown = null;
-    this.wrapper = null;
-  }
-
-  render() {
-    this.wrapper = document.createElement("div");
-    this.wrapper.classList.add("ce-code-tool");
-
-    this.languageDropdown = document.createElement("select");
-    this.languageDropdown.classList.add("ce-code-tool__dropdown");
-    this.languages.forEach((lang) => {
-      const option = document.createElement("option");
-      option.value = lang.value;
-      option.textContent = lang.label;
-      this.languageDropdown.appendChild(option);
-    });
-
-    this.codeArea = document.createElement("textarea");
-    this.codeArea.classList.add("ce-code-tool__textarea");
-    this.codeArea.placeholder = this.placeholder;
-    this.codeArea.value = this.data.code || "";
-
-    this.wrapper.appendChild(this.languageDropdown);
-    this.wrapper.appendChild(this.codeArea);
-
-    // Hide dropdown on block switch
-    this.api.listeners.on(this.wrapper, "block:switch", () => {
-      this.languageDropdown.style.display = "none";
-    });
-
-    // Show dropdown on block focus
-    this.api.listeners.on(this.wrapper, "block:focus", () => {
-      this.languageDropdown.style.display = "block";
-    });
-
-    // Prevent Enter key from creating new blocks and allow newline
-    this.codeArea.addEventListener("keydown", (event) => {
-      if (event.key === "Enter" && !event.shiftKey) {
-        event.preventDefault(); // Prevent creating a new block
-
-        const { selectionStart, selectionEnd } = this.codeArea;
-        const value = this.codeArea.value;
-        this.codeArea.value = `${value.substring(
-          0,
-          selectionStart
-        )}\n${value.substring(selectionEnd)}`;
-        this.codeArea.selectionStart = this.codeArea.selectionEnd =
-          selectionStart + 1; // Move cursor
-      }
-
-      // Delete block on empty Backspace
-      if (event.key === "Backspace" && this.codeArea.value.trim() === "") {
-        this.api.blocks.delete();
-      }
-
-      // Prevent moving to next block with Down Arrow key
-      if (event.key === "ArrowDown") {
-        event.stopPropagation();
-        event.preventDefault();
-        this.api.caret.setToNextBlock();
-      }
-    });
-
-    return this.wrapper;
-  }
-
-  save() {
-    return {
-      code: this.codeArea.value,
-      language: this.languageDropdown.value,
-    };
-  }
-
-  static get toolbox() {
-    return {
-      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 1L1 5v14l11 4 11-4V5L12 1zm0 2.937l8.987 3.218L12 10.844 3.013 7.156 12 4.937zM3.56 8.437L12 11.75l8.44-3.313L12 5.125 3.56 8.437zm0 4.563L12 16.25l8.44-3.312L12 8.875 3.56 13z"/></svg>`,
-      title: "Code Tool",
-    };
-  }
-}
- */ // CodeTool.js
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 var _editorjs = require("@editorjs/editorjs");
@@ -11036,30 +11094,25 @@ class CodeTool {
         this.codeArea.value = this.data.code || "";
         this.wrapper.appendChild(this.languageDropdown);
         this.wrapper.appendChild(this.codeArea);
-        // Hide dropdown on block switch
         this.api.listeners.on(this.wrapper, "block:switch", ()=>{
             this.languageDropdown.style.display = "none";
         });
-        // Show dropdown on block focus
         this.api.listeners.on(this.wrapper, "block:focus", ()=>{
             this.languageDropdown.style.display = "block";
         });
-        // Prevent Enter key from creating new blocks and allow newline
         this.codeArea.addEventListener("keydown", (event)=>{
             if (event.key === "Enter" && !event.shiftKey) {
-                event.preventDefault(); // Prevent creating a new block
+                event.preventDefault();
                 event.stopPropagation();
                 const { selectionStart, selectionEnd } = this.codeArea;
                 const value = this.codeArea.value;
                 this.codeArea.value = `${value.substring(0, selectionStart)}\n${value.substring(selectionEnd)}`;
-                this.codeArea.selectionStart = this.codeArea.selectionEnd = selectionStart + 1; // Move cursor
+                this.codeArea.selectionStart = this.codeArea.selectionEnd = selectionStart + 1;
             }
-            // Delete block on empty Backspace
             if (event.key === "Backspace" && this.codeArea.value.trim() === "") {
-                event.preventDefault(); // Prevent browser back navigation
+                event.preventDefault();
                 this.api.blocks.delete();
             }
-        // Prevent moving to next block with Down Arrow key
         });
         return this.wrapper;
     }

@@ -154,3 +154,28 @@ button {
   border-color: #66afe9;
   box-shadow: 0 0 5px #66afe9;
 }
+
+.image-tool-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  margin-bottom: 10px; /* Adjust spacing as needed */
+}
+
+.ce-image-tool {
+  max-width: 100%; /* Ensure tool container doesn't overflow */
+}
+
+.ce-image-tool img {
+  max-width: 100%; /* Ensure image fits container width */
+  height: auto; /* Maintain aspect ratio */
+}
+
+.ce-image-tool input[type="text"] {
+  width: 100%; /* Full width within tool container */
+  box-sizing: border-box;
+  padding: 8px;
+  margin-top: 8px; /* Space between image and caption */
+}

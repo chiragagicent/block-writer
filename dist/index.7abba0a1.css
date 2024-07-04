@@ -139,4 +139,29 @@ button {
   outline: none;
   box-shadow: 0 0 5px #66afe9;
 }
+
+.image-tool-wrapper {
+  text-align: center;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.ce-image-tool {
+  max-width: 100%;
+}
+
+.ce-image-tool img {
+  max-width: 100%;
+  height: auto;
+}
+
+.ce-image-tool input[type="text"] {
+  box-sizing: border-box;
+  width: 100%;
+  margin-top: 8px;
+  padding: 8px;
+}
 /*# sourceMappingURL=index.7abba0a1.css.map */
