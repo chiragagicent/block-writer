@@ -2,9 +2,10 @@ import EditorJS from "@editorjs/editorjs";
 import Header from "@editorjs/header";
 import List from "@editorjs/list";
 import Embed from "@editorjs/embed";
-import SimpleImage from "@editorjs/simple-image";
 import CodeTool from "@editorjs/code";
 import Delimiter from "@editorjs/delimiter";
+import ImageTool from "./ImageTool";
+import CodeTool from "./CodeTool";
 const editor = new EditorJS({
   holderId: "editorjs",
   tools: {
@@ -21,13 +22,15 @@ const editor = new EditorJS({
       inlineToolbar: false,
       config: {
         youtube: true,
-        coub: true,
       },
     },
-    image: SimpleImage,
     code: CodeTool,
     delimiter: Delimiter,
+    ImageToolool: ImageTool,
   },
+  autofocus: true,
+  placeholder: "Let`s write an awesome blog!",
+  data: {},
 });
 
 let saveBtn = document.querySelector("button");

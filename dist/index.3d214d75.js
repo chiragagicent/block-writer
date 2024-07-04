@@ -593,12 +593,14 @@ var _list = require("@editorjs/list");
 var _listDefault = parcelHelpers.interopDefault(_list);
 var _embed = require("@editorjs/embed");
 var _embedDefault = parcelHelpers.interopDefault(_embed);
-var _simpleImage = require("@editorjs/simple-image");
-var _simpleImageDefault = parcelHelpers.interopDefault(_simpleImage);
 var _code = require("@editorjs/code");
 var _codeDefault = parcelHelpers.interopDefault(_code);
 var _delimiter = require("@editorjs/delimiter");
 var _delimiterDefault = parcelHelpers.interopDefault(_delimiter);
+var _imageTool = require("./ImageTool");
+var _imageToolDefault = parcelHelpers.interopDefault(_imageTool);
+var _codeTool = require("./CodeTool");
+var _codeToolDefault = parcelHelpers.interopDefault(_codeTool);
 const editor = new (0, _editorjsDefault.default)({
     holderId: "editorjs",
     tools: {
@@ -619,14 +621,16 @@ const editor = new (0, _editorjsDefault.default)({
             class: (0, _embedDefault.default),
             inlineToolbar: false,
             config: {
-                youtube: true,
-                coub: true
+                youtube: true
             }
         },
-        image: (0, _simpleImageDefault.default),
-        code: (0, _codeDefault.default),
-        delimiter: (0, _delimiterDefault.default)
-    }
+        code: (0, _codeToolDefault.default),
+        delimiter: (0, _delimiterDefault.default),
+        ImageToolool: (0, _imageToolDefault.default)
+    },
+    autofocus: true,
+    placeholder: "Let`s write an awesome blog!",
+    data: {}
 });
 let saveBtn = document.querySelector("button");
 saveBtn.addEventListener("click", ()=>{
@@ -637,7 +641,7 @@ saveBtn.addEventListener("click", ()=>{
     });
 });
 
-},{"@editorjs/editorjs":"3TToX","@editorjs/header":"41vG9","@editorjs/list":"iR9Po","@editorjs/embed":"lhDVD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@editorjs/code":"7jryp","@editorjs/simple-image":"7VQ4V","@editorjs/delimiter":"yf7K2"}],"3TToX":[function(require,module,exports) {
+},{"@editorjs/editorjs":"3TToX","@editorjs/header":"41vG9","@editorjs/embed":"lhDVD","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","@editorjs/code":"7jryp","@editorjs/delimiter":"yf7K2","./ImageTool":"MjOOO","@editorjs/list":"iR9Po","./CodeTool":"7PB4b"}],"3TToX":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
 parcelHelpers.export(exports, "default", ()=>Bi);
@@ -9862,317 +9866,6 @@ const i = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iR9Po":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>d);
-(function() {
-    "use strict";
-    try {
-        if (typeof document < "u") {
-            var e = document.createElement("style");
-            e.appendChild(document.createTextNode(".cdx-list{margin:0;padding-left:40px;outline:none}.cdx-list__item{padding:5.5px 0 5.5px 3px;line-height:1.6em}.cdx-list--unordered{list-style:disc}.cdx-list--ordered{list-style:decimal}.cdx-list-settings{display:flex}.cdx-list-settings .cdx-settings-button{width:50%}")), document.head.appendChild(e);
-        }
-    } catch (t) {
-        console.error("vite-plugin-css-injected-by-js", t);
-    }
-})();
-const a = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><line x1="9" x2="19" y1="7" y2="7" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="9" x2="19" y1="12" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="9" x2="19" y1="17" y2="17" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5.00001 17H4.99002"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5.00001 12H4.99002"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5.00001 7H4.99002"/></svg>', o = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><line x1="12" x2="19" y1="7" y2="7" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="12" x2="19" y1="12" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="12" x2="19" y1="17" y2="17" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7.79999 14L7.79999 7.2135C7.79999 7.12872 7.7011 7.0824 7.63597 7.13668L4.79999 9.5"/></svg>';
-class d {
-    /**
-   * Notify core that read-only mode is supported
-   *
-   * @returns {boolean}
-   */ static get isReadOnlySupported() {
-        return !0;
-    }
-    /**
-   * Allow to use native Enter behaviour
-   *
-   * @returns {boolean}
-   * @public
-   */ static get enableLineBreaks() {
-        return !0;
-    }
-    /**
-   * Get Tool toolbox settings
-   * icon - Tool icon's SVG
-   * title - title to show in toolbox
-   *
-   * @returns {{icon: string, title: string}}
-   */ static get toolbox() {
-        return {
-            icon: a,
-            title: "List"
-        };
-    }
-    /**
-   * Render plugin`s main Element and fill it with saved data
-   *
-   * @param {object} params - tool constructor options
-   * @param {ListData} params.data - previously saved data
-   * @param {object} params.config - user config for Tool
-   * @param {object} params.api - Editor.js API
-   * @param {boolean} params.readOnly - read-only mode flag
-   */ constructor({ data: e, config: t, api: r, readOnly: s }){
-        this._elements = {
-            wrapper: null
-        }, this.api = r, this.readOnly = s, this.settings = [
-            {
-                name: "unordered",
-                label: this.api.i18n.t("Unordered"),
-                icon: a,
-                default: t.defaultStyle === "unordered" || !1
-            },
-            {
-                name: "ordered",
-                label: this.api.i18n.t("Ordered"),
-                icon: o,
-                default: t.defaultStyle === "ordered" || !0
-            }
-        ], this._data = {
-            style: this.settings.find((i)=>i.default === !0).name,
-            items: []
-        }, this.data = e;
-    }
-    /**
-   * Returns list tag with items
-   *
-   * @returns {Element}
-   * @public
-   */ render() {
-        return this._elements.wrapper = this.makeMainTag(this._data.style), this._data.items.length ? this._data.items.forEach((e)=>{
-            this._elements.wrapper.appendChild(this._make("li", this.CSS.item, {
-                innerHTML: e
-            }));
-        }) : this._elements.wrapper.appendChild(this._make("li", this.CSS.item)), this.readOnly || this._elements.wrapper.addEventListener("keydown", (e)=>{
-            const [t, r] = [
-                13,
-                8
-            ];
-            switch(e.keyCode){
-                case t:
-                    this.getOutofList(e);
-                    break;
-                case r:
-                    this.backspace(e);
-                    break;
-            }
-        }, !1), this._elements.wrapper;
-    }
-    /**
-   * @returns {ListData}
-   * @public
-   */ save() {
-        return this.data;
-    }
-    /**
-   * Allow List Tool to be converted to/from other block
-   *
-   * @returns {{export: Function, import: Function}}
-   */ static get conversionConfig() {
-        return {
-            /**
-       * To create exported string from list, concatenate items by dot-symbol.
-       *
-       * @param {ListData} data - list data to create a string from thats
-       * @returns {string}
-       */ export: (e)=>e.items.join(". "),
-            /**
-       * To create a list from other block's string, just put it at the first item
-       *
-       * @param {string} string - string to create list tool data from that
-       * @returns {ListData}
-       */ import: (e)=>({
-                    items: [
-                        e
-                    ],
-                    style: "unordered"
-                })
-        };
-    }
-    /**
-   * Sanitizer rules
-   *
-   * @returns {object}
-   */ static get sanitize() {
-        return {
-            style: {},
-            items: {
-                br: !0
-            }
-        };
-    }
-    /**
-   * Settings
-   *
-   * @public
-   * @returns {Array}
-   */ renderSettings() {
-        return this.settings.map((e)=>({
-                ...e,
-                isActive: this._data.style === e.name,
-                closeOnActivate: !0,
-                onActivate: ()=>this.toggleTune(e.name)
-            }));
-    }
-    /**
-   * On paste callback that is fired from Editor
-   *
-   * @param {PasteEvent} event - event with pasted data
-   */ onPaste(e) {
-        const t = e.detail.data;
-        this.data = this.pasteHandler(t);
-    }
-    /**
-   * List Tool on paste configuration
-   *
-   * @public
-   */ static get pasteConfig() {
-        return {
-            tags: [
-                "OL",
-                "UL",
-                "LI"
-            ]
-        };
-    }
-    /**
-   * Creates main <ul> or <ol> tag depended on style
-   *
-   * @param {string} style - 'ordered' or 'unordered'
-   * @returns {HTMLOListElement|HTMLUListElement}
-   */ makeMainTag(e) {
-        const t = e === "ordered" ? this.CSS.wrapperOrdered : this.CSS.wrapperUnordered, r = e === "ordered" ? "ol" : "ul";
-        return this._make(r, [
-            this.CSS.baseBlock,
-            this.CSS.wrapper,
-            t
-        ], {
-            contentEditable: !this.readOnly
-        });
-    }
-    /**
-   * Toggles List style
-   *
-   * @param {string} style - 'ordered'|'unordered'
-   */ toggleTune(e) {
-        const t = this.makeMainTag(e);
-        for(; this._elements.wrapper.hasChildNodes();)t.appendChild(this._elements.wrapper.firstChild);
-        this._elements.wrapper.replaceWith(t), this._elements.wrapper = t, this._data.style = e;
-    }
-    /**
-   * Styles
-   *
-   * @private
-   */ get CSS() {
-        return {
-            baseBlock: this.api.styles.block,
-            wrapper: "cdx-list",
-            wrapperOrdered: "cdx-list--ordered",
-            wrapperUnordered: "cdx-list--unordered",
-            item: "cdx-list__item"
-        };
-    }
-    /**
-   * List data setter
-   *
-   * @param {ListData} listData
-   */ set data(e) {
-        e || (e = {}), this._data.style = e.style || this.settings.find((r)=>r.default === !0).name, this._data.items = e.items || [];
-        const t = this._elements.wrapper;
-        t && t.parentNode.replaceChild(this.render(), t);
-    }
-    /**
-   * Return List data
-   *
-   * @returns {ListData}
-   */ get data() {
-        this._data.items = [];
-        const e = this._elements.wrapper.querySelectorAll(`.${this.CSS.item}`);
-        for(let t = 0; t < e.length; t++)e[t].innerHTML.replace("<br>", " ").trim() && this._data.items.push(e[t].innerHTML);
-        return this._data;
-    }
-    /**
-   * Helper for making Elements with attributes
-   *
-   * @param  {string} tagName           - new Element tag name
-   * @param  {Array|string} classNames  - list or name of CSS classname(s)
-   * @param  {object} attributes        - any attributes
-   * @returns {Element}
-   */ _make(e, t = null, r = {}) {
-        const s = document.createElement(e);
-        Array.isArray(t) ? s.classList.add(...t) : t && s.classList.add(t);
-        for(const i in r)s[i] = r[i];
-        return s;
-    }
-    /**
-   * Returns current List item by the caret position
-   *
-   * @returns {Element}
-   */ get currentItem() {
-        let e = window.getSelection().anchorNode;
-        return e.nodeType !== Node.ELEMENT_NODE && (e = e.parentNode), e.closest(`.${this.CSS.item}`);
-    }
-    /**
-   * Get out from List Tool
-   * by Enter on the empty last item
-   *
-   * @param {KeyboardEvent} event
-   */ getOutofList(e) {
-        const t = this._elements.wrapper.querySelectorAll("." + this.CSS.item);
-        if (t.length < 2) return;
-        const r = t[t.length - 1], s = this.currentItem;
-        s === r && !r.textContent.trim().length && (s.parentElement.removeChild(s), this.api.blocks.insert(), this.api.caret.setToBlock(this.api.blocks.getCurrentBlockIndex()), e.preventDefault(), e.stopPropagation());
-    }
-    /**
-   * Handle backspace
-   *
-   * @param {KeyboardEvent} event
-   */ backspace(e) {
-        const t = this._elements.wrapper.querySelectorAll("." + this.CSS.item), r = t[0];
-        r && t.length < 2 && !r.innerHTML.replace("<br>", " ").trim() && e.preventDefault();
-    }
-    /**
-   * Select LI content by CMD+A
-   *
-   * @param {KeyboardEvent} event
-   */ selectItem(e) {
-        e.preventDefault();
-        const t = window.getSelection(), r = t.anchorNode.parentNode, s = r.closest("." + this.CSS.item), i = new Range();
-        i.selectNodeContents(s), t.removeAllRanges(), t.addRange(i);
-    }
-    /**
-   * Handle UL, OL and LI tags paste and returns List data
-   *
-   * @param {HTMLUListElement|HTMLOListElement|HTMLLIElement} element
-   * @returns {ListData}
-   */ pasteHandler(e) {
-        const { tagName: t } = e;
-        let r;
-        switch(t){
-            case "OL":
-                r = "ordered";
-                break;
-            case "UL":
-            case "LI":
-                r = "unordered";
-        }
-        const s = {
-            style: r,
-            items: []
-        };
-        if (t === "LI") s.items = [
-            e.innerHTML
-        ];
-        else {
-            const i = Array.from(e.querySelectorAll("LI"));
-            s.items = i.map((n)=>n.innerHTML).filter((n)=>!!n.trim());
-        }
-        return s;
-    }
-}
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"lhDVD":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -10721,257 +10414,6 @@ const h = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7VQ4V":[function(require,module,exports) {
-var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-parcelHelpers.defineInteropFlag(exports);
-parcelHelpers.export(exports, "default", ()=>h);
-(function() {
-    "use strict";
-    try {
-        if (typeof document < "u") {
-            var e = document.createElement("style");
-            e.appendChild(document.createTextNode(".cdx-simple-image .cdx-loader{min-height:200px}.cdx-simple-image .cdx-input{margin-top:10px}.cdx-simple-image img{max-width:100%;vertical-align:bottom}.cdx-simple-image__caption[contentEditable=true][data-placeholder]:empty:before{position:absolute;content:attr(data-placeholder);color:#707684;font-weight:400;opacity:0}.cdx-simple-image__caption[contentEditable=true][data-placeholder]:empty:before{opacity:1}.cdx-simple-image__caption[contentEditable=true][data-placeholder]:empty:focus:before{opacity:0}.cdx-simple-image__picture--with-background{background:#eff2f5;padding:10px}.cdx-simple-image__picture--with-background img{display:block;max-width:60%;margin:0 auto}.cdx-simple-image__picture--with-border{border:1px solid #e8e8eb;padding:1px}.cdx-simple-image__picture--stretched img{max-width:none;width:100%}")), document.head.appendChild(e);
-        }
-    } catch (t) {
-        console.error("vite-plugin-css-injected-by-js", t);
-    }
-})();
-const s = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 19V19C9.13623 19 8.20435 19 7.46927 18.6955C6.48915 18.2895 5.71046 17.5108 5.30448 16.5307C5 15.7956 5 14.8638 5 13V12C5 9.19108 5 7.78661 5.67412 6.77772C5.96596 6.34096 6.34096 5.96596 6.77772 5.67412C7.78661 5 9.19108 5 12 5H13.5C14.8956 5 15.5933 5 16.1611 5.17224C17.4395 5.56004 18.44 6.56046 18.8278 7.83886C19 8.40666 19 9.10444 19 10.5V10.5"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 13V16M16 19V16M19 16H16M16 16H13"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6.5 17.5L17.5 6.5"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.9919 10.5H19.0015"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.9919 19H11.0015"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13L13 5"/></svg>', a = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M18.9919 9.5H19.0015"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.5 5H14.5096"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M14.625 5H15C17.2091 5 19 6.79086 19 9V9.375"/><path stroke="currentColor" stroke-width="2" d="M9.375 5L9 5C6.79086 5 5 6.79086 5 9V9.375"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.3725 5H9.38207"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 9.5H5.00957"/><path stroke="currentColor" stroke-width="2" d="M9.375 19H9C6.79086 19 5 17.2091 5 15V14.625"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.3725 19H9.38207"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 14.55H5.00957"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M16 13V16M16 19V16M19 16H16M16 16H13"/></svg>', d = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 9L20 12L17 15"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 12H20"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 9L4 12L7 15"/><path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12H10"/></svg>';
-class h {
-    /**
-   * Render plugin`s main Element and fill it with saved data
-   *
-   * @param {{data: SimpleImageData, config: object, api: object}}
-   *   data — previously saved data
-   *   config - user config for Tool
-   *   api - Editor.js API
-   *   readOnly - read-only mode flag
-   */ constructor({ data: t, config: e, api: r, readOnly: o }){
-        this.api = r, this.readOnly = o, this.blockIndex = this.api.blocks.getCurrentBlockIndex() + 1, this.CSS = {
-            baseClass: this.api.styles.block,
-            loading: this.api.styles.loader,
-            input: this.api.styles.input,
-            /**
-       * Tool's classes
-       */ wrapper: "cdx-simple-image",
-            imageHolder: "cdx-simple-image__picture",
-            caption: "cdx-simple-image__caption"
-        }, this.nodes = {
-            wrapper: null,
-            imageHolder: null,
-            image: null,
-            caption: null
-        }, this.data = {
-            url: t.url || "",
-            caption: t.caption || "",
-            withBorder: t.withBorder !== void 0 ? t.withBorder : !1,
-            withBackground: t.withBackground !== void 0 ? t.withBackground : !1,
-            stretched: t.stretched !== void 0 ? t.stretched : !1
-        }, this.tunes = [
-            {
-                name: "withBorder",
-                label: "Add Border",
-                icon: a
-            },
-            {
-                name: "stretched",
-                label: "Stretch Image",
-                icon: d
-            },
-            {
-                name: "withBackground",
-                label: "Add Background",
-                icon: s
-            }
-        ];
-    }
-    /**
-   * Creates a Block:
-   *  1) Show preloader
-   *  2) Start to load an image
-   *  3) After loading, append image and caption input
-   *
-   * @public
-   */ render() {
-        const t = this._make("div", [
-            this.CSS.baseClass,
-            this.CSS.wrapper
-        ]), e = this._make("div", this.CSS.loading), r = this._make("div", this.CSS.imageHolder), o = this._make("img"), i = this._make("div", [
-            this.CSS.input,
-            this.CSS.caption
-        ], {
-            contentEditable: !this.readOnly,
-            innerHTML: this.data.caption || ""
-        });
-        return i.dataset.placeholder = "Enter a caption", t.appendChild(e), this.data.url && (o.src = this.data.url), o.onload = ()=>{
-            t.classList.remove(this.CSS.loading), r.appendChild(o), t.appendChild(r), t.appendChild(i), e.remove(), this._acceptTuneView();
-        }, o.onerror = (n)=>{
-            console.log("Failed to load an image", n);
-        }, this.nodes.imageHolder = r, this.nodes.wrapper = t, this.nodes.image = o, this.nodes.caption = i, t;
-    }
-    /**
-   * @public
-   * @param {Element} blockContent - Tool's wrapper
-   * @returns {SimpleImageData}
-   */ save(t) {
-        const e = t.querySelector("img"), r = t.querySelector("." + this.CSS.input);
-        return e ? Object.assign(this.data, {
-            url: e.src,
-            caption: r.innerHTML
-        }) : this.data;
-    }
-    /**
-   * Sanitizer rules
-   */ static get sanitize() {
-        return {
-            url: {},
-            withBorder: {},
-            withBackground: {},
-            stretched: {},
-            caption: {
-                br: !0
-            }
-        };
-    }
-    /**
-   * Notify core that read-only mode is suppoorted
-   *
-   * @returns {boolean}
-   */ static get isReadOnlySupported() {
-        return !0;
-    }
-    /**
-   * Read pasted image and convert it to base64
-   *
-   * @static
-   * @param {File} file
-   * @returns {Promise<SimpleImageData>}
-   */ onDropHandler(t) {
-        const e = new FileReader();
-        return e.readAsDataURL(t), new Promise((r)=>{
-            e.onload = (o)=>{
-                r({
-                    url: o.target.result,
-                    caption: t.name
-                });
-            };
-        });
-    }
-    /**
-   * On paste callback that is fired from Editor.
-   *
-   * @param {PasteEvent} event - event with pasted config
-   */ onPaste(t) {
-        switch(t.type){
-            case "tag":
-                {
-                    const e = t.detail.data;
-                    this.data = {
-                        url: e.src
-                    };
-                    break;
-                }
-            case "pattern":
-                {
-                    const { data: e } = t.detail;
-                    this.data = {
-                        url: e
-                    };
-                    break;
-                }
-            case "file":
-                {
-                    const { file: e } = t.detail;
-                    this.onDropHandler(e).then((r)=>{
-                        this.data = r;
-                    });
-                    break;
-                }
-        }
-    }
-    /**
-   * Returns image data
-   *
-   * @returns {SimpleImageData}
-   */ get data() {
-        return this._data;
-    }
-    /**
-   * Set image data and update the view
-   *
-   * @param {SimpleImageData} data
-   */ set data(t) {
-        this._data = Object.assign({}, this.data, t), this.nodes.image && (this.nodes.image.src = this.data.url), this.nodes.caption && (this.nodes.caption.innerHTML = this.data.caption);
-    }
-    /**
-   * Specify paste substitutes
-   *
-   * @see {@link ../../../docs/tools.md#paste-handling}
-   * @public
-   */ static get pasteConfig() {
-        return {
-            patterns: {
-                image: /https?:\/\/\S+\.(gif|jpe?g|tiff|png|webp)$/i
-            },
-            tags: [
-                {
-                    img: {
-                        src: !0
-                    }
-                }
-            ],
-            files: {
-                mimeTypes: [
-                    "image/*"
-                ]
-            }
-        };
-    }
-    /**
-   * Returns image tunes config
-   *
-   * @returns {Array}
-   */ renderSettings() {
-        return this.tunes.map((t)=>({
-                ...t,
-                label: this.api.i18n.t(t.label),
-                toggle: !0,
-                onActivate: ()=>this._toggleTune(t.name),
-                isActive: !!this.data[t.name]
-            }));
-    }
-    /**
-   * Helper for making Elements with attributes
-   *
-   * @param  {string} tagName           - new Element tag name
-   * @param  {Array|string} classNames  - list or name of CSS classname(s)
-   * @param  {object} attributes        - any attributes
-   * @returns {Element}
-   */ _make(t, e = null, r = {}) {
-        const o = document.createElement(t);
-        Array.isArray(e) ? o.classList.add(...e) : e && o.classList.add(e);
-        for(const i in r)o[i] = r[i];
-        return o;
-    }
-    /**
-   * Click on the Settings Button
-   *
-   * @private
-   * @param tune
-   */ _toggleTune(t) {
-        this.data[t] = !this.data[t], this._acceptTuneView();
-    }
-    /**
-   * Add specified class corresponds with activated tunes
-   *
-   * @private
-   */ _acceptTuneView() {
-        this.tunes.forEach((t)=>{
-            this.nodes.imageHolder.classList.toggle(this.CSS.imageHolder + "--" + t.name.replace(/([A-Z])/g, (e)=>`-${e[0].toLowerCase()}`), !!this.data[t.name]), t.name === "stretched" && this.api.blocks.stretchBlock(this.blockIndex, !!this.data.stretched);
-        });
-    }
-}
-
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"yf7K2":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
 parcelHelpers.defineInteropFlag(exports);
@@ -11058,6 +10500,584 @@ const r = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="
     }
 }
 
-},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["km5uZ","bB7Pu"], "bB7Pu", "parcelRequire94c2")
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"MjOOO":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+class ImageTool {
+    constructor({ data, api, config }){
+        this.api = api;
+        this.config = config;
+        this.data = data || {};
+        this.wrapper = null;
+        this.triggerFileInput();
+    }
+    static get toolbox() {
+        return {
+            title: "Image",
+            icon: '<svg width="18" height="18" viewBox="0 0 24 24"><path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zm-11-1H5l3.5-4.5 2.5 3.01L17.5 9l3.5 5h-11zm-1-4c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>'
+        };
+    }
+    render() {
+        this.wrapper = document.createElement("div");
+        if (this.data.url) {
+            const img = document.createElement("img");
+            img.src = this.data.url;
+            this.wrapper.appendChild(img);
+        }
+        return this.wrapper;
+    }
+    triggerFileInput() {
+        this.input = document.createElement("input");
+        this.input.type = "file";
+        this.input.accept = "image/*";
+        this.input.style.display = "none";
+        this.input.addEventListener("change", (event)=>this.uploadImage(event));
+        document.body.appendChild(this.input);
+        this.input.click(); // Trigger the file input
+    }
+    uploadImage(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (e)=>{
+                this.data.url = e.target.result;
+                this.updateView();
+            };
+            reader.readAsDataURL(file);
+        }
+    }
+    updateView() {
+        this.wrapper.innerHTML = ""; // Clear the wrapper
+        const img = document.createElement("img");
+        img.src = this.data.url;
+        this.wrapper.appendChild(img);
+    }
+    save(blockContent) {
+        return {
+            url: this.data.url
+        };
+    }
+    validate(savedData) {
+        return !!savedData.url;
+    }
+    static get pasteConfig() {
+        return {
+            tags: [
+                "img"
+            ]
+        };
+    }
+    static get sanitize() {
+        return {
+            url: {}
+        };
+    }
+}
+exports.default = ImageTool;
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"iR9Po":[function(require,module,exports) {
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+parcelHelpers.export(exports, "default", ()=>d);
+(function() {
+    "use strict";
+    try {
+        if (typeof document < "u") {
+            var e = document.createElement("style");
+            e.appendChild(document.createTextNode(".cdx-list{margin:0;padding-left:40px;outline:none}.cdx-list__item{padding:5.5px 0 5.5px 3px;line-height:1.6em}.cdx-list--unordered{list-style:disc}.cdx-list--ordered{list-style:decimal}.cdx-list-settings{display:flex}.cdx-list-settings .cdx-settings-button{width:50%}")), document.head.appendChild(e);
+        }
+    } catch (t) {
+        console.error("vite-plugin-css-injected-by-js", t);
+    }
+})();
+const a = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><line x1="9" x2="19" y1="7" y2="7" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="9" x2="19" y1="12" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="9" x2="19" y1="17" y2="17" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5.00001 17H4.99002"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5.00001 12H4.99002"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M5.00001 7H4.99002"/></svg>', o = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24"><line x1="12" x2="19" y1="7" y2="7" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="12" x2="19" y1="12" y2="12" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><line x1="12" x2="19" y1="17" y2="17" stroke="currentColor" stroke-linecap="round" stroke-width="2"/><path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M7.79999 14L7.79999 7.2135C7.79999 7.12872 7.7011 7.0824 7.63597 7.13668L4.79999 9.5"/></svg>';
+class d {
+    /**
+   * Notify core that read-only mode is supported
+   *
+   * @returns {boolean}
+   */ static get isReadOnlySupported() {
+        return !0;
+    }
+    /**
+   * Allow to use native Enter behaviour
+   *
+   * @returns {boolean}
+   * @public
+   */ static get enableLineBreaks() {
+        return !0;
+    }
+    /**
+   * Get Tool toolbox settings
+   * icon - Tool icon's SVG
+   * title - title to show in toolbox
+   *
+   * @returns {{icon: string, title: string}}
+   */ static get toolbox() {
+        return {
+            icon: a,
+            title: "List"
+        };
+    }
+    /**
+   * Render plugin`s main Element and fill it with saved data
+   *
+   * @param {object} params - tool constructor options
+   * @param {ListData} params.data - previously saved data
+   * @param {object} params.config - user config for Tool
+   * @param {object} params.api - Editor.js API
+   * @param {boolean} params.readOnly - read-only mode flag
+   */ constructor({ data: e, config: t, api: r, readOnly: s }){
+        this._elements = {
+            wrapper: null
+        }, this.api = r, this.readOnly = s, this.settings = [
+            {
+                name: "unordered",
+                label: this.api.i18n.t("Unordered"),
+                icon: a,
+                default: t.defaultStyle === "unordered" || !1
+            },
+            {
+                name: "ordered",
+                label: this.api.i18n.t("Ordered"),
+                icon: o,
+                default: t.defaultStyle === "ordered" || !0
+            }
+        ], this._data = {
+            style: this.settings.find((i)=>i.default === !0).name,
+            items: []
+        }, this.data = e;
+    }
+    /**
+   * Returns list tag with items
+   *
+   * @returns {Element}
+   * @public
+   */ render() {
+        return this._elements.wrapper = this.makeMainTag(this._data.style), this._data.items.length ? this._data.items.forEach((e)=>{
+            this._elements.wrapper.appendChild(this._make("li", this.CSS.item, {
+                innerHTML: e
+            }));
+        }) : this._elements.wrapper.appendChild(this._make("li", this.CSS.item)), this.readOnly || this._elements.wrapper.addEventListener("keydown", (e)=>{
+            const [t, r] = [
+                13,
+                8
+            ];
+            switch(e.keyCode){
+                case t:
+                    this.getOutofList(e);
+                    break;
+                case r:
+                    this.backspace(e);
+                    break;
+            }
+        }, !1), this._elements.wrapper;
+    }
+    /**
+   * @returns {ListData}
+   * @public
+   */ save() {
+        return this.data;
+    }
+    /**
+   * Allow List Tool to be converted to/from other block
+   *
+   * @returns {{export: Function, import: Function}}
+   */ static get conversionConfig() {
+        return {
+            /**
+       * To create exported string from list, concatenate items by dot-symbol.
+       *
+       * @param {ListData} data - list data to create a string from thats
+       * @returns {string}
+       */ export: (e)=>e.items.join(". "),
+            /**
+       * To create a list from other block's string, just put it at the first item
+       *
+       * @param {string} string - string to create list tool data from that
+       * @returns {ListData}
+       */ import: (e)=>({
+                    items: [
+                        e
+                    ],
+                    style: "unordered"
+                })
+        };
+    }
+    /**
+   * Sanitizer rules
+   *
+   * @returns {object}
+   */ static get sanitize() {
+        return {
+            style: {},
+            items: {
+                br: !0
+            }
+        };
+    }
+    /**
+   * Settings
+   *
+   * @public
+   * @returns {Array}
+   */ renderSettings() {
+        return this.settings.map((e)=>({
+                ...e,
+                isActive: this._data.style === e.name,
+                closeOnActivate: !0,
+                onActivate: ()=>this.toggleTune(e.name)
+            }));
+    }
+    /**
+   * On paste callback that is fired from Editor
+   *
+   * @param {PasteEvent} event - event with pasted data
+   */ onPaste(e) {
+        const t = e.detail.data;
+        this.data = this.pasteHandler(t);
+    }
+    /**
+   * List Tool on paste configuration
+   *
+   * @public
+   */ static get pasteConfig() {
+        return {
+            tags: [
+                "OL",
+                "UL",
+                "LI"
+            ]
+        };
+    }
+    /**
+   * Creates main <ul> or <ol> tag depended on style
+   *
+   * @param {string} style - 'ordered' or 'unordered'
+   * @returns {HTMLOListElement|HTMLUListElement}
+   */ makeMainTag(e) {
+        const t = e === "ordered" ? this.CSS.wrapperOrdered : this.CSS.wrapperUnordered, r = e === "ordered" ? "ol" : "ul";
+        return this._make(r, [
+            this.CSS.baseBlock,
+            this.CSS.wrapper,
+            t
+        ], {
+            contentEditable: !this.readOnly
+        });
+    }
+    /**
+   * Toggles List style
+   *
+   * @param {string} style - 'ordered'|'unordered'
+   */ toggleTune(e) {
+        const t = this.makeMainTag(e);
+        for(; this._elements.wrapper.hasChildNodes();)t.appendChild(this._elements.wrapper.firstChild);
+        this._elements.wrapper.replaceWith(t), this._elements.wrapper = t, this._data.style = e;
+    }
+    /**
+   * Styles
+   *
+   * @private
+   */ get CSS() {
+        return {
+            baseBlock: this.api.styles.block,
+            wrapper: "cdx-list",
+            wrapperOrdered: "cdx-list--ordered",
+            wrapperUnordered: "cdx-list--unordered",
+            item: "cdx-list__item"
+        };
+    }
+    /**
+   * List data setter
+   *
+   * @param {ListData} listData
+   */ set data(e) {
+        e || (e = {}), this._data.style = e.style || this.settings.find((r)=>r.default === !0).name, this._data.items = e.items || [];
+        const t = this._elements.wrapper;
+        t && t.parentNode.replaceChild(this.render(), t);
+    }
+    /**
+   * Return List data
+   *
+   * @returns {ListData}
+   */ get data() {
+        this._data.items = [];
+        const e = this._elements.wrapper.querySelectorAll(`.${this.CSS.item}`);
+        for(let t = 0; t < e.length; t++)e[t].innerHTML.replace("<br>", " ").trim() && this._data.items.push(e[t].innerHTML);
+        return this._data;
+    }
+    /**
+   * Helper for making Elements with attributes
+   *
+   * @param  {string} tagName           - new Element tag name
+   * @param  {Array|string} classNames  - list or name of CSS classname(s)
+   * @param  {object} attributes        - any attributes
+   * @returns {Element}
+   */ _make(e, t = null, r = {}) {
+        const s = document.createElement(e);
+        Array.isArray(t) ? s.classList.add(...t) : t && s.classList.add(t);
+        for(const i in r)s[i] = r[i];
+        return s;
+    }
+    /**
+   * Returns current List item by the caret position
+   *
+   * @returns {Element}
+   */ get currentItem() {
+        let e = window.getSelection().anchorNode;
+        return e.nodeType !== Node.ELEMENT_NODE && (e = e.parentNode), e.closest(`.${this.CSS.item}`);
+    }
+    /**
+   * Get out from List Tool
+   * by Enter on the empty last item
+   *
+   * @param {KeyboardEvent} event
+   */ getOutofList(e) {
+        const t = this._elements.wrapper.querySelectorAll("." + this.CSS.item);
+        if (t.length < 2) return;
+        const r = t[t.length - 1], s = this.currentItem;
+        s === r && !r.textContent.trim().length && (s.parentElement.removeChild(s), this.api.blocks.insert(), this.api.caret.setToBlock(this.api.blocks.getCurrentBlockIndex()), e.preventDefault(), e.stopPropagation());
+    }
+    /**
+   * Handle backspace
+   *
+   * @param {KeyboardEvent} event
+   */ backspace(e) {
+        const t = this._elements.wrapper.querySelectorAll("." + this.CSS.item), r = t[0];
+        r && t.length < 2 && !r.innerHTML.replace("<br>", " ").trim() && e.preventDefault();
+    }
+    /**
+   * Select LI content by CMD+A
+   *
+   * @param {KeyboardEvent} event
+   */ selectItem(e) {
+        e.preventDefault();
+        const t = window.getSelection(), r = t.anchorNode.parentNode, s = r.closest("." + this.CSS.item), i = new Range();
+        i.selectNodeContents(s), t.removeAllRanges(), t.addRange(i);
+    }
+    /**
+   * Handle UL, OL and LI tags paste and returns List data
+   *
+   * @param {HTMLUListElement|HTMLOListElement|HTMLLIElement} element
+   * @returns {ListData}
+   */ pasteHandler(e) {
+        const { tagName: t } = e;
+        let r;
+        switch(t){
+            case "OL":
+                r = "ordered";
+                break;
+            case "UL":
+            case "LI":
+                r = "unordered";
+        }
+        const s = {
+            style: r,
+            items: []
+        };
+        if (t === "LI") s.items = [
+            e.innerHTML
+        ];
+        else {
+            const i = Array.from(e.querySelectorAll("LI"));
+            s.items = i.map((n)=>n.innerHTML).filter((n)=>!!n.trim());
+        }
+        return s;
+    }
+}
+
+},{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}],"7PB4b":[function(require,module,exports) {
+/* 
+
+import { Tool } from "@editorjs/editorjs";
+
+export default class CodeTool {
+  static get isReadOnlySupported() {
+    return true;
+  }
+
+  constructor({ data, config, api }) {
+    this.data = data;
+    this.api = api;
+    this.config = config || {};
+    this.placeholder = this.config.placeholder || "Enter your code here";
+    this.languages = [
+      { value: "javascript", label: "JavaScript" },
+      { value: "cpp", label: "C++" },
+      { value: "java", label: "Java" },
+    ];
+
+    this.codeArea = null;
+    this.languageDropdown = null;
+    this.wrapper = null;
+  }
+
+  render() {
+    this.wrapper = document.createElement("div");
+    this.wrapper.classList.add("ce-code-tool");
+
+    this.languageDropdown = document.createElement("select");
+    this.languageDropdown.classList.add("ce-code-tool__dropdown");
+    this.languages.forEach((lang) => {
+      const option = document.createElement("option");
+      option.value = lang.value;
+      option.textContent = lang.label;
+      this.languageDropdown.appendChild(option);
+    });
+
+    this.codeArea = document.createElement("textarea");
+    this.codeArea.classList.add("ce-code-tool__textarea");
+    this.codeArea.placeholder = this.placeholder;
+    this.codeArea.value = this.data.code || "";
+
+    this.wrapper.appendChild(this.languageDropdown);
+    this.wrapper.appendChild(this.codeArea);
+
+    // Hide dropdown on block switch
+    this.api.listeners.on(this.wrapper, "block:switch", () => {
+      this.languageDropdown.style.display = "none";
+    });
+
+    // Show dropdown on block focus
+    this.api.listeners.on(this.wrapper, "block:focus", () => {
+      this.languageDropdown.style.display = "block";
+    });
+
+    // Prevent Enter key from creating new blocks and allow newline
+    this.codeArea.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault(); // Prevent creating a new block
+
+        const { selectionStart, selectionEnd } = this.codeArea;
+        const value = this.codeArea.value;
+        this.codeArea.value = `${value.substring(
+          0,
+          selectionStart
+        )}\n${value.substring(selectionEnd)}`;
+        this.codeArea.selectionStart = this.codeArea.selectionEnd =
+          selectionStart + 1; // Move cursor
+      }
+
+      // Delete block on empty Backspace
+      if (event.key === "Backspace" && this.codeArea.value.trim() === "") {
+        this.api.blocks.delete();
+      }
+
+      // Prevent moving to next block with Down Arrow key
+      if (event.key === "ArrowDown") {
+        event.stopPropagation();
+        event.preventDefault();
+        this.api.caret.setToNextBlock();
+      }
+    });
+
+    return this.wrapper;
+  }
+
+  save() {
+    return {
+      code: this.codeArea.value,
+      language: this.languageDropdown.value,
+    };
+  }
+
+  static get toolbox() {
+    return {
+      icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 1L1 5v14l11 4 11-4V5L12 1zm0 2.937l8.987 3.218L12 10.844 3.013 7.156 12 4.937zM3.56 8.437L12 11.75l8.44-3.313L12 5.125 3.56 8.437zm0 4.563L12 16.25l8.44-3.312L12 8.875 3.56 13z"/></svg>`,
+      title: "Code Tool",
+    };
+  }
+}
+ */ // CodeTool.js
+var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
+parcelHelpers.defineInteropFlag(exports);
+var _editorjs = require("@editorjs/editorjs");
+class CodeTool {
+    static get isReadOnlySupported() {
+        return true;
+    }
+    constructor({ data, config, api }){
+        this.data = data;
+        this.api = api;
+        this.config = config || {};
+        this.placeholder = this.config.placeholder || "Enter your code here";
+        this.languages = [
+            {
+                value: "javascript",
+                label: "JavaScript"
+            },
+            {
+                value: "cpp",
+                label: "C++"
+            },
+            {
+                value: "java",
+                label: "Java"
+            }
+        ];
+        this.codeArea = null;
+        this.languageDropdown = null;
+        this.wrapper = null;
+    }
+    render() {
+        this.wrapper = document.createElement("div");
+        this.wrapper.classList.add("ce-code-tool");
+        this.languageDropdown = document.createElement("select");
+        this.languageDropdown.classList.add("ce-code-tool__dropdown");
+        this.languages.forEach((lang)=>{
+            const option = document.createElement("option");
+            option.value = lang.value;
+            option.textContent = lang.label;
+            this.languageDropdown.appendChild(option);
+        });
+        this.codeArea = document.createElement("textarea");
+        this.codeArea.classList.add("ce-code-tool__textarea");
+        this.codeArea.placeholder = this.placeholder;
+        this.codeArea.value = this.data.code || "";
+        this.wrapper.appendChild(this.languageDropdown);
+        this.wrapper.appendChild(this.codeArea);
+        // Hide dropdown on block switch
+        this.api.listeners.on(this.wrapper, "block:switch", ()=>{
+            this.languageDropdown.style.display = "none";
+        });
+        // Show dropdown on block focus
+        this.api.listeners.on(this.wrapper, "block:focus", ()=>{
+            this.languageDropdown.style.display = "block";
+        });
+        // Prevent Enter key from creating new blocks and allow newline
+        this.codeArea.addEventListener("keydown", (event)=>{
+            if (event.key === "Enter" && !event.shiftKey) {
+                event.preventDefault(); // Prevent creating a new block
+                event.stopPropagation();
+                const { selectionStart, selectionEnd } = this.codeArea;
+                const value = this.codeArea.value;
+                this.codeArea.value = `${value.substring(0, selectionStart)}\n${value.substring(selectionEnd)}`;
+                this.codeArea.selectionStart = this.codeArea.selectionEnd = selectionStart + 1; // Move cursor
+            }
+            // Delete block on empty Backspace
+            if (event.key === "Backspace" && this.codeArea.value.trim() === "") {
+                event.preventDefault(); // Prevent browser back navigation
+                this.api.blocks.delete();
+            }
+        // Prevent moving to next block with Down Arrow key
+        });
+        return this.wrapper;
+    }
+    save() {
+        return {
+            code: this.codeArea.value,
+            language: this.languageDropdown.value
+        };
+    }
+    static get toolbox() {
+        return {
+            icon: `<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M12 1L1 5v14l11 4 11-4V5L12 1zm0 2.937l8.987 3.218L12 10.844 3.013 7.156 12 4.937zM3.56 8.437L12 11.75l8.44-3.313L12 5.125 3.56 8.437zm0 4.563L12 16.25l8.44-3.312L12 8.875 3.56 13z"/></svg>`,
+            title: "Code Tool"
+        };
+    }
+}
+exports.default = CodeTool;
+
+},{"@editorjs/editorjs":"3TToX","@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3"}]},["km5uZ","bB7Pu"], "bB7Pu", "parcelRequire94c2")
 
 //# sourceMappingURL=index.3d214d75.js.map

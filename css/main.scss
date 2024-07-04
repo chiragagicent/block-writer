@@ -9,6 +9,7 @@ body {
   background: white;
   width: 80%;
   padding: 1em;
+  font-size: x-large;
 }
 
 button {
@@ -23,8 +24,133 @@ button {
 
 #Navbar {
   display: flex;
-  justify-content: space-between; /* Aligns items to opposite sides */
-  align-items: start; /* Centers items vertically */
+  justify-content: space-between;
+  align-items: start;
   padding: 1px;
   background-color: rgb(255, 255, 255);
+}
+
+.ce-toolbar__plus {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 1px solid #ddd;
+  background-color: #fff;
+  color: #000; /* Icon color */
+  font-size: 18px; /* Increased icon size */
+  font-weight: 300; /* Less bold */
+  transition: background-color 0.3s, border-color 0.3s;
+  cursor: pointer; /* Change cursor to pointer for better UX */
+}
+
+.ce-toolbar__plus:hover {
+  background-color: #f0f0f0; /* Hover background color */
+  border-color: #bbb; /* Hover border color */
+}
+/* Custom CSS to style Editor.js tooltip */
+.ct__content {
+  position: relative; /* Required for absolute positioning of tooltip */
+  display: inline-block; /* Ensure content wraps around the tooltip */
+}
+
+/* Style for the tooltip itself */
+.ct__content::before {
+  content: "Tooltip text here"; /* Tooltip content */
+  visibility: hidden;
+  width: 200px; /* Width of the tooltip */
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 8px;
+  padding: 10px; /* Padding around the tooltip content */
+  font-size: 14px; /* Font size of the tooltip text */
+  line-height: 1.5; /* Line height for the tooltip */
+
+  /* Position the tooltip */
+  position: absolute;
+  z-index: 1;
+  top: 50%; /* Position vertically centered */
+  left: 125%; /* Position to the right of the .ct__content */
+  transform: translateY(-50%); /* Center vertically */
+
+  /* Fade in transition */
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+/* Show the tooltip on hover */
+.ct__content:hover::before {
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Hide unwanted text or elements */
+.ct__content div:not(.ce-toolbar__plus-shortcut) {
+  display: none;
+}
+
+.ct__content::after {
+  content: "Add image,code,embed...";
+  visibility: visible;
+  opacity: 1;
+}
+
+/* Style for the items inside the toolbar */
+.ce-popover__items {
+  color: rgb(0, 128, 58, 0.95); /* Green background color */
+}
+
+/* Style for the icon inside each popover item */
+.ce-popover-item__icon svg {
+  color: rgb(0, 128, 58, 0.95); /* White fill color for the SVG icon */
+}
+
+/* Style for the title of each popover item */
+.ce-popover-item__title {
+  margin-left: 10px; /* Add some margin for spacing */
+  font-weight: bold; /* Make the title bold */
+  color: rgb(0, 128, 58, 0.95);
+}
+
+.ce-toolbar__plus {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 3px;
+}
+/* editor.css */
+
+.ce-code-tool {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  background-color: #f9f9f9;
+  margin-bottom: 10px;
+}
+
+.ce-code-tool__dropdown {
+  margin-bottom: 5px;
+  padding: 4px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+}
+
+.ce-code-tool__textarea {
+  width: 100%;
+  height: 200px;
+  padding: 8px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+}
+
+.ce-code-tool__textarea:focus {
+  outline: none;
+  border-color: #66afe9;
+  box-shadow: 0 0 5px #66afe9;
 }
